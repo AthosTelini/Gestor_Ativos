@@ -6,6 +6,7 @@ import '../../utils/formatters.dart';
 import '../widgets/month_selector.dart';
 import '../styles/app_theme.dart';
 import '../widgets/add_transaction_modal.dart';
+import 'about_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -18,6 +19,7 @@ class DashboardScreen extends StatelessWidget {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Stack(
         children: [
+          // Fundo Azul (Header)
           Container(
             height: MediaQuery.of(context).size.height * 0.35,
             decoration: const BoxDecoration(
@@ -31,6 +33,7 @@ class DashboardScreen extends StatelessWidget {
           SafeArea(
             child: Column(
               children: [
+                // 1. Cabeçalho Superior
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                   child: Row(
@@ -68,6 +71,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ),
 
+                // 2. Saldo Total
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Column(
@@ -98,6 +102,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ),
 
+                // 3. Seletor de Mês e Filtros
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Column(
@@ -105,6 +110,7 @@ class DashboardScreen extends StatelessWidget {
                       const MonthSelector(),
                       const SizedBox(height: 16),
 
+                      // FILTRO
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 24),
                         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -158,6 +164,7 @@ class DashboardScreen extends StatelessWidget {
                   ),
                 ),
 
+                // 4. Lista de Transações
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -311,7 +318,17 @@ class DashboardScreen extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
+                // === AQUI A LÓGICA DO OLHO ===
+                provider.isObscure
+                    ? const Text(
+                  'R\$ •••••',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Color(0xFF0F2027),
+                  ),
+                )
+                    : Text(
                   Formatters.currency(transaction.amount),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
